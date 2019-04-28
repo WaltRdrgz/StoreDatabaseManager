@@ -1,0 +1,69 @@
+SQL INSERT TABLES
+
+CREATE TABLE Store(
+	storeID int,
+	address VARCHAR(20),
+	city VARCHAR(20),
+	state VARCHAR(20),
+	phone VARCHAR(20),
+	PRIMARY KEY(storeID));
+
+CREATE TABLE Employee(
+	employeeID int,
+	firstName VARCHAR(20),
+	lastName VARCHAR(20),
+	password VARCHAR(20),
+	role VARCHAR(20),
+	storeID int,
+	PRIMARY KEY(employeeID),
+	FOREIGN KEY(storeID) REFERENCES Store(storeID));
+
+CREATE TABLE Item(
+	itemID int,
+	name VARCHAR(20),
+	price DOUBLE(8,2),
+	quantity int,
+	description VARCHAR(100),
+	location VARCHAR(20),
+	attachments VARCHAR(30),
+	storeID int,
+	PRIMARY KEY(itemID),
+	FOREIGN KEY(storeID) REFERENCES Store(storeID));
+
+CREATE TABLE Service(
+	serviceID int,
+	name VARCHAR(50),
+	price DOUBLE(8,2),
+	description VARCHAR(100),
+	storeID int,
+	PRIMARY KEY(serviceID),
+	FOREIGN KEY(storeID) REFERENCES Store(storeID));
+	
+INSERT INTO Service
+VALUES(9, 'hard drive installation', 49.99,
+ 'installation of a new hard drive in pc', 1);
+ 
+INSERT INTO Service
+VALUES(10, 'protection plan', 19.99,
+'protection plan to protect item in case of accidencts', 1);
+ 
+
+	
+	
+CREATE TABLE Customer(
+	customerID int, 
+	firstName VARCHAR(20),
+	lastName VARCHAR(20),
+	email VARCHAR(30),
+	phone VARCHAR(30),
+	serviceID int,
+	PRIMARY KEY(customerID),
+	FOREIGN KEY(serviceID) REFERENCES Service(serviceID));
+	
+CREATE VIEW LowItems
+AS SELECT itemID, name, quantity
+FROM Item
+WHERE quantity < 3;
+	
+	
+	
